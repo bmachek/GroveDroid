@@ -26,6 +26,10 @@ public abstract class GrovePiRunner {
 		
 	}
 	
+	protected void stop() {
+		grovePi.close();
+	}
+	
 	public abstract void run() throws GroveDroidException;
 	
 }
