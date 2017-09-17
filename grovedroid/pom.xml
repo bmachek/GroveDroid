@@ -4,7 +4,7 @@
 
 	<groupId>systems.machek </groupId>
 	<artifactId>grovedroid</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1</version>
 	<packaging>jar</packaging>
 
 	<name>grovedroid</name>
@@ -52,41 +52,25 @@
 						<phase>install</phase>
 						<configuration>
 							<target>
-								<delete dir="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.${project.packaging}"
+								<delete
+									dir="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.${project.packaging}"
 									includeemptydirs="false" />
-							</target>
-							<target>
 								<concat destfile="${project.build.directory}/groveDroid"
 									binary="yes">
 									<fileset file="${project.basedir}/stub.sh" />
 									<fileset
 										file="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.${project.packaging}" />
 								</concat>
+								<chmod perm="a+x">
+									<fileset dir="${project.build.directory}">
+										<include name="**/groveDroid" />
+									</fileset>
+								</chmod>
 							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>script-chmod</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>chmod</executable>
-							<arguments>
-								<argument>+x</argument>
-								<argument>${project.build.directory}/groveDroid</argument>
-							</arguments>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -105,6 +89,31 @@
 					<file>${project.build.directory}/groveDroid</file>
 					<packaging>run</packaging>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>jdeb</artifactId>
+				<groupId>org.vafer</groupId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jdeb</goal>
+						</goals>
+						<configuration>
+							<dataSet>
+								<data>
+									<src>${project.build.directory}/groveDroid</src>
+									<type>file</type>
+									<mapper>
+										<type>perm</type>
+										<prefix>/usr/sbin</prefix>
+									</mapper>
+								</data>
+							</dataSet>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<resources>
