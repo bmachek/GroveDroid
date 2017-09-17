@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>systems.machek</groupId>
+	<groupId>systems.machek </groupId>
 	<artifactId>grovedroid</artifactId>
 	<version>0.1.0</version>
 	<packaging>jar</packaging>
@@ -51,6 +51,10 @@
 					<execution>
 						<phase>install</phase>
 						<configuration>
+							<target>
+								<delete dir="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.${project.packaging}"
+									includeemptydirs="false" />
+							</target>
 							<target>
 								<concat destfile="${project.build.directory}/groveDroid"
 									binary="yes">

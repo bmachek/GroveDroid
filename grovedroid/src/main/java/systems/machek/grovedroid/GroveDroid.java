@@ -21,7 +21,7 @@ public class GroveDroid {
 		CommandLineParser parser = new DefaultParser();
 		Options options = new Options();
 
-		options.addOption("t", "test", false, "Test GrovePi");
+		options.addOption("t", "test", false, "Test program");
 		options.addOption("h", "help", false, "Print usage");
 		options.addOption("d", "debug", false, "Debug output");
 		options.addOption("v", "version", false, "Version");
