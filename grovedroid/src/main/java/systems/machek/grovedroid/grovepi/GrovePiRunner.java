@@ -26,7 +26,7 @@ public abstract class GrovePiRunner {
 		
 	}
 	
-	protected void stop() {
+	public void stop() {
 		grovePi.close();
 	}
 	

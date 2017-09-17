@@ -4,16 +4,20 @@
 
 	<groupId>systems.machek</groupId>
 	<artifactId>grovedroid</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<packaging>jar</packaging>
 
 	<name>grovedroid</name>
-	<url>http://maven.apache.org</url>
+	<url>https://machek.systems</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<groupId>${project.groupId}</groupId>
+		<artifactId>${project.artifactId}</artifactId>
+		<version>${project.version}</version>
+		<packaging>${project.packaging}</packaging>
 	</properties>
 
 	<build>
@@ -39,7 +43,72 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<configuration>
+							<target>
+								<concat destfile="${project.build.directory}/groveDroid"
+									binary="yes">
+									<fileset file="${project.basedir}/stub.sh" />
+									<fileset
+										file="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.${project.packaging}" />
+								</concat>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>script-chmod</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>chmod</executable>
+							<arguments>
+								<argument>+x</argument>
+								<argument>${project.build.directory}/groveDroid</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<file>${project.build.directory}/groveDroid</file>
+					<packaging>run</packaging>
+				</configuration>
+			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 	<dependencies>
