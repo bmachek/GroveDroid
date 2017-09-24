@@ -3,7 +3,6 @@ Version: [[version]]
 Section: misc
 Priority: optional
 Architecture: all
-Depends: jdk (>= 1.8)
 Maintainer: Bastian Machek <bastian@machek.info>
 Description: GroveDroid Server
 Distribution: development

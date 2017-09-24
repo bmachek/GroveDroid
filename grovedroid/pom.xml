@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>systems.machek </groupId>
-	<artifactId>grovedroid</artifactId>
+	<artifactId>grovedroid-server</artifactId>
 	<version>0.1.1</version>
 	<packaging>jar</packaging>
 
-	<name>grovedroid</name>
+	<name>grovedroid-server</name>
 	<url>https://machek.systems</url>
 
 	<properties>
@@ -55,7 +55,7 @@
 								<delete
 									dir="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.${project.packaging}"
 									includeemptydirs="false" />
-								<concat destfile="${project.build.directory}/groveDroid"
+								<concat destfile="${project.build.directory}/groveDroid-server"
 									binary="yes">
 									<fileset file="${project.basedir}/stub.sh" />
 									<fileset
@@ -63,7 +63,7 @@
 								</concat>
 								<chmod perm="a+x">
 									<fileset dir="${project.build.directory}">
-										<include name="**/groveDroid" />
+										<include name="**/groveDroid-server" />
 									</fileset>
 								</chmod>
 							</target>
@@ -86,7 +86,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<file>${project.build.directory}/groveDroid</file>
+					<file>${project.build.directory}/groveDroid-server</file>
 					<packaging>run</packaging>
 				</configuration>
 			</plugin>
@@ -103,7 +103,7 @@
 						<configuration>
 							<dataSet>
 								<data>
-									<src>${project.build.directory}/groveDroid</src>
+									<src>${project.build.directory}/groveDroid-server</src>
 									<type>file</type>
 									<mapper>
 										<type>perm</type>
